@@ -8,14 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
-    
-    struct Meme {
-        var topText: String
-        var bottomText: String
-        var image: UIImage
-        var memedImage: UIImage
-    }
+class MemeViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
@@ -25,6 +18,13 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTextFieldWithInitialText(topTextField, text: "TOP")
+        setupTextFieldWithInitialText(bottomTextField, text: "BOTTOM")
+        
+        shareButton.enabled = false
+    }
+    
+    func setupTextFieldWithInitialText(textField: UITextField, text: String) {
         let memeTextAttributes = [
             NSStrokeColorAttributeName : UIColor.blackColor(),
             NSForegroundColorAttributeName : UIColor.whiteColor(),
@@ -32,17 +32,10 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             NSStrokeWidthAttributeName : Float(-1.0)
         ]
         
-        topTextField.text = "TOP"
-        topTextField.delegate = self
-        topTextField.textAlignment = .Center
-        topTextField.defaultTextAttributes = memeTextAttributes
-        
-        bottomTextField.text = "BOTTOM"
-        bottomTextField.delegate = self
-        bottomTextField.textAlignment = .Center
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        shareButton.enabled = false
+        textField.text = text
+        textField.delegate = self
+        textField.textAlignment = .Center
+        textField.defaultTextAttributes = memeTextAttributes
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,27 +51,29 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     func shiftUpBecauseOfKeyboard(notification: NSNotification) {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        self.view.frame.origin.y -= keyboardSize.CGRectValue().height
-    }
+        if bottomTextField.isFirstResponder() {
+            self.view.frame.origin.y = keyboardSize.CGRectValue().height * -1
+        }
+            }
     
     func shiftDownBecauseOfKeyboard(notification: NSNotification) {
-        let userInfo = notification.userInfo
-        print(userInfo)
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        self.view.frame.origin.y += keyboardSize.CGRectValue().height
+        if bottomTextField.isFirstResponder() {
+            self.view.frame.origin.y = 0
+        }
     }
 
     @IBAction func pickImagePhotoLibrary(sender: AnyObject) {
-        let imagePickerViewController = UIImagePickerController()
-        imagePickerViewController.delegate = self
-        imagePickerViewController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        presentViewController(imagePickerViewController, animated: true, completion: nil)
+        pickImageFromSource(UIImagePickerControllerSourceType.PhotoLibrary)
     }
     
     @IBAction func pickImageCamera(sender: AnyObject) {
+        pickImageFromSource(UIImagePickerControllerSourceType.Camera)
+    }
+    
+    func pickImageFromSource(source: UIImagePickerControllerSourceType) {
         let imagePickerViewController = UIImagePickerController()
         imagePickerViewController.delegate = self
-        imagePickerViewController.sourceType = UIImagePickerControllerSourceType.Camera
+        imagePickerViewController.sourceType = source
         presentViewController(imagePickerViewController, animated: true, completion: nil)
     }
     
