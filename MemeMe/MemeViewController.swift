@@ -14,6 +14,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate, UIIm
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate, UIIm
         setupTextFieldWithInitialText(bottomTextField, text: "BOTTOM")
         
         shareButton.enabled = false
+        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
     }
     
     func setupTextFieldWithInitialText(textField: UITextField, text: String) {
@@ -39,11 +41,13 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate, UIIm
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(shiftUpBecauseOfKeyboard(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(shiftDownBecauseOfKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }

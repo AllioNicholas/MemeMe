@@ -40,12 +40,12 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P9a-Gf-Dpk">
-                                <rect key="frame" x="284" y="100" width="32" height="17"/>
+                                <rect key="frame" x="284" y="99" width="32" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c6b-18-fWS">
-                                <rect key="frame" x="269" y="477" width="63" height="17"/>
+                                <rect key="frame" x="269" y="504" width="63" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
@@ -65,11 +65,11 @@
                             <constraint firstItem="DoV-UR-h6b" firstAttribute="top" secondItem="vHd-5a-w9C" secondAttribute="bottom" id="2Cj-90-05f"/>
                             <constraint firstItem="wLA-ed-YL4" firstAttribute="leading" secondItem="DoV-UR-h6b" secondAttribute="leading" id="4oB-jY-h7n"/>
                             <constraint firstItem="vHd-5a-w9C" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="5N2-c9-zVL"/>
-                            <constraint firstItem="P9a-Gf-Dpk" firstAttribute="top" secondItem="vHd-5a-w9C" secondAttribute="bottom" constant="36" id="FO7-8I-33M"/>
+                            <constraint firstItem="P9a-Gf-Dpk" firstAttribute="top" secondItem="vHd-5a-w9C" secondAttribute="bottom" constant="35" id="FO7-8I-33M"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wLA-ed-YL4" secondAttribute="trailing" constant="-20" id="Po6-Dd-SB8"/>
                             <constraint firstItem="wLA-ed-YL4" firstAttribute="trailing" secondItem="DoV-UR-h6b" secondAttribute="trailing" id="TKI-Ws-WrN"/>
                             <constraint firstItem="wLA-ed-YL4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="TXQ-Mc-j7I"/>
-                            <constraint firstItem="wLA-ed-YL4" firstAttribute="top" secondItem="c6b-18-fWS" secondAttribute="bottom" constant="62" id="UYf-jC-MPH"/>
+                            <constraint firstItem="wLA-ed-YL4" firstAttribute="top" secondItem="c6b-18-fWS" secondAttribute="bottom" constant="35" id="UYf-jC-MPH"/>
                             <constraint firstItem="wLA-ed-YL4" firstAttribute="centerX" secondItem="P9a-Gf-Dpk" secondAttribute="centerX" id="W6m-Zp-HdO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vHd-5a-w9C" secondAttribute="trailing" constant="-20" id="WlS-H0-7M2"/>
                             <constraint firstItem="vHd-5a-w9C" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="aMJ-MX-dIE"/>
@@ -82,6 +82,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="c6b-18-fWS" id="6gS-6E-hry"/>
+                        <outlet property="cameraButton" destination="51h-9m-ex3" id="Qgd-3N-9L9"/>
                         <outlet property="imagePickerView" destination="DoV-UR-h6b" id="yiY-ox-FWV"/>
                         <outlet property="shareButton" destination="jEO-T3-sfO" id="FBd-Vq-HnK"/>
                         <outlet property="topTextField" destination="P9a-Gf-Dpk" id="C3B-wj-r2I"/>
