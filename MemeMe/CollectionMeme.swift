@@ -34,7 +34,7 @@ class CollectionMeme: UICollectionViewController {
     override func viewWillAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue()) {
             if let savedMemes = self.loadMemes() {
-                self.memes += savedMemes
+                self.memes = savedMemes
             }
             self.collectionView?.reloadData()
         }
