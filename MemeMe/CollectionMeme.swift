@@ -31,6 +31,15 @@ class CollectionMeme: UICollectionViewController {
         collectionViewFlowLayout.itemSize = CGSizeMake(dimension, dimension)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if let savedMemes = self.loadMemes() {
+                self.memes += savedMemes
+            }
+            self.collectionView?.reloadData()
+        }
+    }
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memes.count
     }
@@ -38,7 +47,7 @@ class CollectionMeme: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let coll = collectionView.dequeueReusableCellWithReuseIdentifier("MemeColl", forIndexPath: indexPath) as! MemeCollectionCellView
         let meme = memes[indexPath.item]
-        coll.memeImage.image = meme.image
+        coll.memeImage.image = meme.memedImage
 
         return coll
     }

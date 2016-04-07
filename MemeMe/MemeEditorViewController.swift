@@ -104,7 +104,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func saveMeme(memed: UIImage) {
-        let meme = Meme(topText: topTextField.text!, image: memed, bottomText: bottomTextField.text!)
+        let meme = Meme(topText: topTextField.text!, memedImage: memed, origImage: imagePickerView.image, bottomText: bottomTextField.text!)
         var memes = [Meme]()
         if let savedMemes = NSKeyedUnarchiver.unarchiveObjectWithFile(Meme.ArchiveURL.path!) as? [Meme] {
             memes += savedMemes

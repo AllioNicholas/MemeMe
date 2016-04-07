@@ -24,13 +24,15 @@ class ListMeme: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         dispatch_async(dispatch_get_main_queue()) {
-            self.memes = self.loadMemes()!
+            if let savedMemes = self.loadMemes() {
+                self.memes += savedMemes
+            }
             self.tableView.reloadData()
         }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let nextVC = storyboard?.instantiateViewControllerWithIdentifier("detailMeme") as! DetailMeme
+        let nextVC = storyboard?.instantiateViewControllerWithIdentifier("DetailMeme") as! DetailMeme
         nextVC.meme = memes[indexPath.row]
         navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -38,7 +40,7 @@ class ListMeme: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MemeCell")! as UITableViewCell
         cell.textLabel?.text = "\(memes[indexPath.row].topText) \(memes[indexPath.row].bottomText)"
-        cell.imageView?.image = memes[indexPath.row].image
+        cell.imageView?.image = memes[indexPath.row].memedImage
         return cell
     }
     

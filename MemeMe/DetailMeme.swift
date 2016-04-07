@@ -16,6 +16,6 @@ class DetailMeme: UIViewController {
     @IBOutlet weak var memeImage: UIImageView!
     
     override func viewDidLoad() {
-        memeImage.image = meme?.image
+        memeImage.image = meme?.memedImage
     }
 }

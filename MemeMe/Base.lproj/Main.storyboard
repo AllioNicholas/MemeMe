@@ -242,7 +242,7 @@
         <!--Detail Meme-->
         <scene sceneID="OsI-Xz-ebz">
             <objects>
-                <viewController storyboardIdentifier="detailMeme" id="CVN-x4-K7C" customClass="DetailMeme" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailMeme" id="CVN-x4-K7C" customClass="DetailMeme" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L1i-ES-TYz"/>
                         <viewControllerLayoutGuide type="bottom" id="rYM-gj-0zD"/>
