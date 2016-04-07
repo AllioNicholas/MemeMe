@@ -8,13 +8,16 @@
 
 import UIKit
 
-class MemeViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
+class MemeEditorViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    
+    @IBOutlet weak var topToolBar: UIToolbar!
+    @IBOutlet weak var bottomToolbar: UIToolbar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,38 +103,48 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate, UIIm
         return true
     }
     
-    func saveMeme() {
-        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: generateMemedImage())
+    func saveMeme(memed: UIImage) {
+        let meme = Meme(topText: topTextField.text!, image: memed, bottomText: bottomTextField.text!)
+        var memes = [Meme]()
+        if let savedMemes = NSKeyedUnarchiver.unarchiveObjectWithFile(Meme.ArchiveURL.path!) as? [Meme] {
+            memes += savedMemes
+        } // else is the first meme
+        
+        memes.append(meme!)
+        NSKeyedArchiver.archiveRootObject(memes, toFile: Meme.ArchiveURL.path!)
     }
     
     func generateMemedImage() -> UIImage {
         
-        // Hide toolbar and navbar
-        navigationController?.toolbar.hidden = true
-        navigationController?.navigationBar.hidden = true
+        // Hide toolbars
+        topToolBar.hidden = true
+        bottomToolbar.hidden = true
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
-        view.drawViewHierarchyInRect(self.view.frame,
-                                     afterScreenUpdates: true)
-        let memedImage : UIImage =
-            UIGraphicsGetImageFromCurrentImageContext()
+        view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        // Show toolbar and navbar
-        navigationController?.toolbar.hidden = false
-        navigationController?.navigationBar.hidden = false
+        // Show toolbars
+        topToolBar.hidden = false
+        bottomToolbar.hidden = false
         
         return memedImage
     }
 
     @IBAction func shareMeme(sender: AnyObject) {
-        let shareViewController = UIActivityViewController(activityItems: [generateMemedImage()], applicationActivities: nil)
+        let memedImage = generateMemedImage()
+        let shareViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         presentViewController(shareViewController, animated: true, completion: nil)
         shareViewController.completionWithItemsHandler = {(activityType, completed:Bool, returnedItems:[AnyObject]?, error: NSError?) in
-            self.saveMeme()
+            self.saveMeme(memedImage)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
+    }
+    
+    @IBAction func cancelCreation(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
